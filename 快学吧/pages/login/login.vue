@@ -43,7 +43,7 @@
 					"username":JSON.stringify(e.detail.value.username),
 					"password":JSON.stringify(e.detail.value.password)
 				}).then(res=>{
-					if(res.data.code==200){
+					if(res.data.code!==200){
 						uni.showModal({
 							content: '您输入的账号或密码错误，请重新输入',
 							showCancel: false

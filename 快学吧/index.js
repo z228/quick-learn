@@ -75,6 +75,7 @@ import config from './libs/config/config.js'
 // 各个需要fixed的地方的z-index配置文件
 import zIndex from './libs/config/zIndex.js'
 
+
 const $u = {
 	queryParams: queryParams,
 	route: route,
