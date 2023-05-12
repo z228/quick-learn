@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sjz.mapper.UserMapper">	<!-- namespace必须写 -->
+    <select id="getAllUser" resultType="User">
+        select * from user;
+    </select>
+
+    <select id="getUserByName" resultType="User" parameterType="String">
+        select * from user where username=#{name};
+    </select>
+
+    <update id="modUserInfo" parameterType="User">
+        update user set nickname=#{nickname},sex=#{sex},description=#{description},email=#{email},phone=#{phone} where username=#{username}
+    </update>
+
+    <insert id="addUser" parameterType="User">
+        insert into user(username,password,nickname,image) values(#{username},#{password},"没有名字哦","https://www.qqkw.com/d/file/p/2022/04-18/c202d9a9b3cfe17b994220931fbdca91.jpg")
+    </insert>
+
+    <select id="getAllUserLimit" resultType="User">
+        select * from User limit #{start},#{size};
+    </select>
+
+    <select id="getTotal" resultType="int">
+        select count (*) from User;
+    </select>
+</mapper>

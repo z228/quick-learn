@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sjz.mapper.NoteMapper">	<!-- namespace必须写 -->
+    <select id="getAllNote" resultType="Note">
+        select * from note;
+    </select>
+
+    <select id="getNoteById" parameterType="int" resultType="Note">
+        select * from note where nid=#{id};
+    </select>
+
+    <update id="modNote" parameterType="Note">
+        update note set title=#{title},content=#{content} where nid=#{nid}
+    </update>
+
+    <delete id="delNote" parameterType="int">
+        delete from note where nid=#{nid}
+    </delete>
+
+    <insert id="addNote" parameterType="Note">
+        insert into note(title,content) values(#{title},#{content})
+    </insert>
+</mapper>
