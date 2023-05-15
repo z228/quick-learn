@@ -1,6 +1,18 @@
 <template>
 	<view>
-		<rich-text class="text" :nodes="data"></rich-text>
+		<!-- 词组 -->
+		<view >
+			<el-card class="box-card" v-for="(item,index) in collections" :key="item.id">
+				<view  @click="handleMessage(item)">
+					<view class="title">
+						{{item.composition.title}}
+					</view>
+					<view class="text">
+					  {{item.composition.chinese}}
+					</view>
+			  </view>
+			</el-card>			
+		</view>
 	</view>
 </template>
 
@@ -8,88 +20,61 @@
 	export default {
 		data() {
 			return {
-				data:`<section>
-<section>
-<section>
-<p>◆<strong>词汇积累</strong></p>
-</section>
-</section>
-</section>
-<section>
-<section>
-<section>
-<p><strong>\xa0 1.rally</strong></p>
-</section>
-</section>
-</section>
-<section>
-<section>
-<section>
-<section>
-<p>\xa0 \xa0 音标/ˈr&aelig;lɪ/</p>
-<p>\xa0 \xa0 v. 召集，集合; 公开支持(或反对); 重新集合，重整(军队); 重新振作; (价格)回升，升值</p>
-<p>\xa0 \xa0 n. 集会，大会; 汽车拉力赛; (网球等比赛中的)相持，拉锯; 提高; 恢复健康</p>
-</section>
-</section>
-</section>
-</section>
-<section>
-<section>
-<section>
-<p><strong>\xa0 2.ferrous</strong></p>
-</section>
-</section>
-</section>
-<section>
-<section>
-<section>
-<section>
-<p>\xa0 \xa0 音标/ˈfɛrəs/</p>
-<p>\xa0 \xa0 adj.亚铁的；铁的，含铁的</p>
-</section>
-</section>
-</section>
-</section>
-<section>
-<section>
-<section>
-<p><strong>\xa0 3.niche</strong></p>
-</section>
-</section>
-</section>
-<section> 
-<section>
-<section>
-<section>
-<p>\xa0 \xa0 音标/niːʃ/</p>
-<p>\xa0 \xa0 n. 合适(称心)的工作(活动)；壁龛; (产品的)商机</p>
-<p>\xa0 \xa0 v. 把&hellip;&hellip;放在壁龛中</p>
-</section>
-</section>
-</section>
-</section>
-<section>
-<section>
-<section>
-<p>◆<strong>词组搭配</strong></p>
-</section>
-</section>
-</section>
-<section>
-<p>\xa0 1.elevated level 高水平</p>
-</section>
-`
+				collections:[]
 			}
 		},
 		methods: {
-			
+			handleMessage(item){
+				let type = item.composition.type;
+				if(type == "文章"){
+					this.$router.replace({
+						path:"../article/article",
+						query:{"article":item.composition}
+					})
+				}else if(type == "翻译"){
+					this.$router.replace({
+						path:"../translate/translate",
+						query:{"translate":item.composition}
+					})
+				}else if(type=="作文"){
+					this.$router.replace({
+						path:"../composition_detil/index",
+						query:{"composition":item.composition}
+					})
+				}
+			}
+		},
+		onLoad() {
+			this.$request.get("/colletion").then(res=>{
+				console.log(res.data)
+				this.collections=res.data;
+			});
 		}
 	}
 </script>
 
 <style lang="less" scoped>
-	.text{
-		Font-family: 'Times New Roman', '宋体';
-		font-size: 14px;
+	page{
+			background-color: #F1F1F1;
+		}
+	.box-card {
+		width: 100%;
+		margin: 10rpx;
+		.title{
+			margin-bottom: 20rpx;
+			font-weight: bold;
+		}
+		.text {
+			color: #3F536E;
+			font-size: 14px;
+			display: -webkit-box;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			word-wrap: break-word;
+			white-space: normal !important;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
+		}
+		
 	}
 </style>

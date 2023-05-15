@@ -9,4 +9,6 @@ import java.util.List;
 @Mapper
 public interface CompositionMapper {
     public List<Composition> getQueryWithLimitComp(HashMap<String,Object> map);
+
+    public Composition getCompositionById(int id);
 }
