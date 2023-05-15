@@ -6,4 +6,8 @@
     <select id="getQueryWithLimitComp" parameterType="map" resultType="Composition">
         select * from composition where type=#{type} order by like_num desc limit #{pageStart},5 ;
     </select>
+
+    <select id="getCompositionById" parameterType="int" resultType="Composition">
+        select * from composition where cid=#{id};
+    </select>
 </mapper>

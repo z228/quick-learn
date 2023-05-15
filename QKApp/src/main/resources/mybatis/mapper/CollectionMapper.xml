@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sjz.mapper.CollectionMapper">	<!-- namespace必须写 -->
+
+    <select id="getAll" resultMap="collectionMap">
+        select * from collection where delete_flag=1
+    </select>
+    <resultMap id="collectionMap" type="MyCollection">
+        <association property="composition" javaType="Composition" column="composition_id" select="com.sjz.mapper.CompositionMapper.getCompositionById">
+        </association>
+    </resultMap>
+
+    <select id="isCollection" parameterType="int" resultType="MyCollection">
+        select * from collection where composition_id=#{id} and delete_flag=1
+    </select>
+
+    <select id="isExistCollection" parameterType="int" resultType="MyCollection">
+        select * from collection where composition_id=#{id}
+    </select>
+
+    <insert id="addCollection" parameterType="int">
+        insert into collection(composition_id,delete_flag) values(#{id},1)
+    </insert>
+
+    <update id="changeCollection" parameterType="int">
+        update collection set delete_flag=#{deleteFlag} where composition_id=#{id}
+    </update>
+</mapper>
